@@ -17,6 +17,8 @@ else{
 			enterqiangke();
 			return false;
 		}
+		var ts=document.getElementById("lblTs");
+		if(ts && sessionStorage['hasUpdate']=='true') ts.innerHTML=ts.innerHTML+'（<a href="'+sessionStorage['updateUrl']+'" target="JNU_jwxt_update">获取新版插件<\/a>）';
 	}
 }
 
@@ -25,20 +27,17 @@ function enterqiangke(){
 }
 
 function ready(){
-	top.window.document.title='选课-暨大教务系统';
+	if(sessionStorage['hasUpdate']=='true'){
+		top.window.document.title='选课-发现插件可更新！';
+	}else top.window.document.title='选课-暨大教务系统';
 	console.log("加载抢课页面");
 	var ts=document.getElementById("lblTs");
-	if(ts) ts.innerText=ts.innerText+"（抢课模式）";
-	var l=document.getElementById("pnlPg");
-	if(l){
-		l.childNodes[1].childNodes[0].childNodes[1].innerHTML='<input type="submit" value="准备抢课" id="btnReady">&nbsp;'+l.childNodes[1].childNodes[0].childNodes[1].innerHTML;
-		var b = document.getElementById("btnReady"); 
-		b.onclick=function(){ 
-			ready2();
-			b.value='已准备';
-			return false;
-		} 
+	if(ts){
+		ts.innerText=ts.innerText+"（抢课模式）";
+		if(sessionStorage['hasUpdate']=='true') ts.innerHTML=ts.innerHTML+'（<a href="'+sessionStorage['updateUrl']+'" target="JNU_jwxt_update">获取新版插件<\/a>）';
 	}
+	var l=document.getElementById("pnlPg");
+	ready2();
 }
 function ready2(){
 	var Btn = document.getElementById('btnKkLb'); 
@@ -56,7 +55,9 @@ function ready2(){
 	}
 }
 function start(){
-	top.window.document.title='准备抢课-暨大教务系统';
+	if(sessionStorage['hasUpdate']=='true'){
+		top.window.document.title='准备抢课-发现插件可更新！';
+	}else top.window.document.title='准备抢课-暨大教务系统';
 	var Btn = document.getElementById('btnKkLb'); 
 	var Btn2 = document.getElementById('dlstSsfw');
 	if(Btn.disabled) {
@@ -81,7 +82,9 @@ function start(){
 	}else Btn.click();
 }
 function run(form){
-	top.window.document.title='抢课中-暨大教务系统';
+	if(sessionStorage['hasUpdate']=='true'){
+		top.window.document.title='抢课中-发现插件可更新！';
+	}else top.window.document.title='抢课中-暨大教务系统';
 	var p=false;
 	window.alert = function(){ return false; }
 	form.onsubmit=function(){ return p; }
@@ -140,7 +143,9 @@ function run(form){
 function success(){
 	var btnX = document.getElementById("btnReturnX"); 
 	if (btnX) {
-		top.window.document.title='抢课失败？-暨大教务系统';
+		if(sessionStorage['hasUpdate']=='true'){
+			top.window.document.title='抢课失败？-发现插件可更新！';
+		}else top.window.document.title='抢课失败？-暨大教务系统';
 		sessionStorage['status']='ready';
 		console.log('#选课失败了？');
 		btnX.click();
@@ -149,7 +154,9 @@ function success(){
 	if(Btn){
 		Btn.click();
 		if(Btn.disabled) {
-			top.window.document.title='抢课成功？-暨大教务系统';
+			if(sessionStorage['hasUpdate']=='true'){
+				top.window.document.title='抢课成功？-发现插件可更新！';
+			}else top.window.document.title='抢课成功？-暨大教务系统';
 			sessionStorage['status']='ready';
 			Btn.disabled=false;
 			console.log("#抢课貌似成功了？共计尝试"+sessionStorage['count']+"次");

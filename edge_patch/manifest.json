@@ -101,7 +101,7 @@
     "description": "暨南大学教务系统辅助插件，作者：asdi998",
     "manifest_version": 2,
     "name": "暨大选课辅助",
-    "version": "0.2",
+    "version": "0.21",
     "-ms-preload": {
         "backgroundScript": "backgroundScriptsAPIBridge.js",
         "contentScript": "contentScriptsAPIBridge.js"
