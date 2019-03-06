@@ -21,6 +21,18 @@
 </head>
 
 <body>
+	<div style="display:inline-block;">
+	选择源：
+	<select id="sites">
+		<option value="jwxt">jwxt.jnu.edu.cn</option>
+		<option value="172">202.116.0.172:8083</option>
+	</select>
+	<input type="button" value="切换" id="setO"><br>
+	<input type="button" name="fast_login" value="快速登录" id="enter_login">
+	<input type="button" name="fast_index" value="进入首页" id="enter_index">
+	<input type="button" name="fast_qiangke" value="快速选课" id="enter_qiangke">
+	</div><br>
+	<div id="shaixuan" style="display:none">
 	隐藏选满的课: <input type="radio" name="noneedfull" checked="checked" value="false" />否 
 	 <input type="radio" name="noneedfull" value="true" />是<br>
 	筛选模式: <input type="radio" name="mode" checked="checked" value="true" />排除 
@@ -69,6 +81,7 @@
 	  </tr>
 	</table>
 	<br>
+	<div id="leibie" style="display:none">
 	筛选类别：<input type="radio" name="sclass" checked="checked" value="false" />否 
 	 <input type="radio" name="sclass" value="true" />是<br>
 	<input type="checkbox" name="class[]" value="其他类" id="qita">
@@ -91,7 +104,9 @@
 	<label for="ty">体育竞技与休闲运动课程群</label><br>
 	<input type="checkbox" name="class[]" value="创新创业就业心理类课程群" id="cc">
 	<label for="cc">创新创业就业心理类课程群</label><br>
+	</div>
 	<input type="submit" value="筛选" id="sb"><br>
+	</div>
 	<script src="popup.js"></script>
 </body>
 

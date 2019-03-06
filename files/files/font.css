@@ -1,0 +1,95 @@
+BODY
+{
+	margin: 0px;
+	font-size: 12px;
+	line-height: 16px;
+	font-family: "宋体";
+	text-decoration: none; 
+}
+td {
+	FONT-SIZE: 12px; LINE-HEIGHT: 16px; FONT-FAMILY: "宋体"; TEXT-DECORATION: none
+}
+.w3 {
+	BORDER-RIGHT: #999 1px solid; BORDER-TOP: #999 1px solid; FONT-SIZE: 12px; BACKGROUND: #F4F4F4; BORDER-LEFT: #999 1px solid; COLOR: #000000; BORDER-BOTTOM: #999 1px solid
+}
+.b3 {
+	FONT-SIZE: 18px; LINE-HEIGHT: 21px; FONT-FAMILY: '黑体';color:#056589
+}
+.b31{
+	FONT-SIZE: 18px; LINE-HEIGHT: 21px; FONT-FAMILY: '黑体';color:#333333
+}
+A:link {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #000000; TEXT-DECORATION: underline
+}
+A.f1:link {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A.f1:visited {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A.f1:hover {
+	COLOR: #0066CC; TEXT-DECORATION: underline
+}
+A.f2:link {
+	COLOR: #999999; TEXT-DECORATION: none
+}
+A.f2:visited {
+	COLOR: #999999; TEXT-DECORATION: none
+}
+A.f2:hover {
+	COLOR: #ff0000; TEXT-DECORATION: none
+}
+A.f3:link {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A.f3:visited {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A.f3:hover {
+	COLOR: #ff0000; TEXT-DECORATION: none
+}
+A.f4:link {
+	COLOR: #666666; TEXT-DECORATION: none
+}
+A.f4:visited {
+	COLOR: #666666; TEXT-DECORATION: none
+}
+A.f4:hover {
+	COLOR: #ff0000; TEXT-DECORATION: none
+}
+A.f5:link {
+	COLOR: #000000; TEXT-DECORATION: underline
+}
+A.f5:visited {
+	COLOR: #000000; TEXT-DECORATION: underline
+}
+A.f5:hover {
+	COLOR: #0000ff; TEXT-DECORATION: none
+}
+.bfont {
+	color: #006666;
+	font-weight: bold;
+}
+
+
+
+.btn_mouseout { 
+border: 1px solid #2C59AA;
+	PADDING-RIGHT: 2px; 	PADDING-LEFT: 2px; 	FONT-SIZE: 12px; 	FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#C3DAF5); 	CURSOR: hand; 	COLOR: black; 	PADDING-TOP: 2px;
+}
+.btn_mouseover {
+BORDER-RIGHT: #2C59AA 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #2C59AA 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#D7E7FA); BORDER-LEFT: #2C59AA 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #2C59AA 1px solid
+}
+.btn_mousedown
+{
+BORDER-RIGHT: #FFE400 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #FFE400 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#C3DAF5); BORDER-LEFT: #FFE400 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #FFE400 1px solid
+}
+.btn_mouseup {
+BORDER-RIGHT: #2C59AA 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #2C59AA 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#C3DAF5); BORDER-LEFT: #2C59AA 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #2C59AA 1px solid
+}

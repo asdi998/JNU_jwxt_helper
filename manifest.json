@@ -1,43 +1,105 @@
 {
-  "manifest_version": 2,
-  "name": "暨大选课辅助",
-  "description": "暨南大学教务系统辅助插件，作者：asdi998",
-  "version": "0.21",
-  "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html",
-    "default_title": "暨大选课辅助"
-  },
-  "content_scripts":
-	[{
-		"matches": ["http://202.116.0.172:8083/","http://202.116.0.172:8083/Login.aspx","http://202.116.0.163/","http://202.116.0.163/Login.aspx","https://jwxt.jnu.edu.cn/","https://jwxt.jnu.edu.cn/Login.aspx"],
-		"js": ["script_login.js"]
-	},{
-		"matches": ["http://202.116.0.172:8083/IndexPage.aspx","http://202.116.0.163/IndexPage.aspx","https://jwxt.jnu.edu.cn/IndexPage.aspx"],
-		"js": ["script_index.js"]
-	},{
-		"matches": ["http://202.116.0.172:8083/Secure/PaiKeXuanKe/wfrm_XK_XuanKe.aspx","http://202.116.0.163/Secure/PaiKeXuanKe/wfrm_XK_XuanKe.aspx","https://jwxt.jnu.edu.cn/Secure/PaiKeXuanKe/wfrm_XK_XuanKe.aspx"],
-		"js": ["script_xuanke.js"],
-		"all_frames": true
-	},{
-		"matches": ["http://202.116.0.172:8083/Secure/PaiKeXuanKe/wfrm_Pk_RlRscx.aspx","http://202.116.0.163/Secure/PaiKeXuanKe/wfrm_Pk_RlRscx.aspx","https://jwxt.jnu.edu.cn/Secure/PaiKeXuanKe/wfrm_Pk_RlRscx.aspx"],
-		"js": ["script_paike.js"],
-		"all_frames": true
-	},{
-		"matches": ["http://202.116.0.172:8083/Secure/PaiKeXuanKe/wfrm_Pk_Ggxxk.aspx","http://202.116.0.163/Secure/PaiKeXuanKe/wfrm_Pk_Ggxxk.aspx","https://jwxt.jnu.edu.cn/Secure/PaiKeXuanKe/wfrm_Pk_Ggxxk.aspx"],
-		"js": ["script_tongshi.js"],
-		"all_frames": true
-	},{
-		"matches": ["http://202.116.0.172:8083/areaLeft.aspx","http://202.116.0.163/areaLeft.aspx","https://jwxt.jnu.edu.cn/areaLeft.aspx"],
-		"js": ["script_left.js"],
-		"all_frames": true
-	},{
-		"matches": ["http://202.116.0.172:8083/Secure/PaiKeXuanKe/wfrm_Xk_ReadMeCn.aspx","http://202.116.0.163/Secure/PaiKeXuanKe/wfrm_Xk_ReadMeCn.aspx","https://jwxt.jnu.edu.cn/Secure/PaiKeXuanKe/wfrm_Xk_ReadMeCn.aspx"],
-		"js": ["script_read.js"],
-		"all_frames": true
-	},{
-		"matches": ["http://202.116.0.172:8083/areaMain.aspx","http://202.116.0.163/areaMain.aspx","https://jwxt.jnu.edu.cn/areaMain.aspx"],
-		"js": ["script_right.js"],
-		"all_frames": true
-	}]
+    "author": "asdi998",
+    "background": {
+        "page": "background.html",
+        "persistent": true
+    },
+    "browser_action": {
+        "default_icon": {
+            "19": "icon.png"
+        },
+        "default_popup": "popup.html",
+        "default_title": "暨大选课辅助"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "http://202.116.0.172:8083/Login.aspx",
+                "https://jwxt.jnu.edu.cn/Login.aspx"
+            ],
+            "js": [
+                "script_login.js"
+            ]
+        },
+        {
+            "matches": [
+                "http://202.116.0.172:8083/IndexPage.aspx",
+                "https://jwxt.jnu.edu.cn/IndexPage.aspx"
+            ],
+            "js": [
+                "script_index.js"
+            ]
+        },
+        {
+            "matches": [
+                "http://202.116.0.172:8083/Secure/PaiKeXuanKe/wfrm_XK_XuanKe.aspx",
+                "https://jwxt.jnu.edu.cn/Secure/PaiKeXuanKe/wfrm_XK_XuanKe.aspx"
+            ],
+            "js": [
+                "script_xuanke.js"
+            ],
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "http://202.116.0.172:8083/Secure/PaiKeXuanKe/wfrm_Pk_RlRscx.aspx",
+                "https://jwxt.jnu.edu.cn/Secure/PaiKeXuanKe/wfrm_Pk_RlRscx.aspx"
+            ],
+            "js": [
+                "script_paike.js"
+            ],
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "http://202.116.0.172:8083/Secure/PaiKeXuanKe/wfrm_Pk_Ggxxk.aspx",
+                "https://jwxt.jnu.edu.cn/Secure/PaiKeXuanKe/wfrm_Pk_Ggxxk.aspx"
+            ],
+            "js": [
+                "script_tongshi.js"
+            ],
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "http://202.116.0.172:8083/areaLeft.aspx",
+                "https://jwxt.jnu.edu.cn/areaLeft.aspx"
+            ],
+            "js": [
+                "script_left.js"
+            ],
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "http://202.116.0.172:8083/Secure/PaiKeXuanKe/wfrm_Xk_ReadMeCn.aspx",
+                "https://jwxt.jnu.edu.cn/Secure/PaiKeXuanKe/wfrm_Xk_ReadMeCn.aspx"
+            ],
+            "js": [
+                "script_read.js"
+            ],
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "http://202.116.0.172:8083/areaMain.aspx",
+                "https://jwxt.jnu.edu.cn/areaMain.aspx"
+            ],
+            "js": [
+                "script_right.js"
+            ],
+            "all_frames": true
+        }
+    ],
+    "description": "暨南大学教务系统辅助插件，作者：asdi998",
+    "manifest_version": 2,
+    "name": "暨大选课辅助",
+    "permissions": [
+        "storage",
+        "webRequest",
+        "webRequestBlocking",
+        "*://202.116.0.172/*",
+        "*://jwxt.jnu.edu.cn/*"
+    ],
+    "version": "0.3"
 }

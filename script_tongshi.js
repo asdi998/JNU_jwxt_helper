@@ -4,58 +4,60 @@ sessionStorage['page']='tongshi';
 
 chrome.extension.onMessage.addListener(
     function(request, sender, sendResponse) {
-		console.log(request);
-		all=document.getElementsByClassName('DGItemStyle');
-		if(request.m[3]){
-			for( var i = 0 ; i < all.length ; i++ ){
-				if(request.m[4]){
-					for( var k = 0 ; k < request.m[0].length ; k++ ){
-						if(all[i].childNodes[5].innerHTML.indexOf(request.m[0][k]) != -1){
-							all[i].style.display="none";
+		if(request.page=='get') sendResponse({result:"tongshi"});
+		else{
+			all=document.getElementsByClassName('DGItemStyle');
+			if(request.m[3]){
+				for( var i = 0 ; i < all.length ; i++ ){
+					if(request.m[4]){
+						for( var k = 0 ; k < request.m[0].length ; k++ ){
+							if(all[i].childNodes[5].innerHTML.indexOf(request.m[0][k]) != -1){
+								all[i].style.display="none";
+							}
+						}
+					}
+					if(request.m[5]){
+						for( var k = 0 ; k < request.m[1].length ; k++ ){
+							if(all[i].childNodes[4].innerHTML.indexOf(request.m[1][k]) != -1){
+								all[i].style.display="none";
+							}
 						}
 					}
 				}
-				if(request.m[5]){
-					for( var k = 0 ; k < request.m[1].length ; k++ ){
-						if(all[i].childNodes[4].innerHTML.indexOf(request.m[1][k]) != -1){
-							all[i].style.display="none";
+			}else{
+				for( var i = 0 ; i < all.length ; i++ ){
+					var a=false;var b=false;
+					if(request.m[4]){
+						for( var k = 0 ; k < request.m[0].length ; k++ ){
+							if(all[i].childNodes[5].innerHTML.indexOf(request.m[0][k]) != -1){
+								a=true;
+								break;
+							}
 						}
+					}else a=true;
+					if(request.m[5]){
+						for( var k = 0 ; k < request.m[1].length ; k++ ){
+							if(all[i].childNodes[4].innerHTML.indexOf(request.m[1][k]) != -1){
+								b=true;
+								break;
+							}
+						}
+					}else b=true;
+					if(!a || !b) all[i].style.display="none";
+				}
+			}
+			if(request.m[2]){
+				for( var i = 0 ; i < all.length ; i++ ){
+					if(Number(all[i].childNodes[10].innerHTML) <= Number(all[i].childNodes[11].innerHTML)){
+						all[i].style.display="none";
 					}
 				}
 			}
-		}else{
-			for( var i = 0 ; i < all.length ; i++ ){
-				var a=false;var b=false;
-				if(request.m[4]){
-					for( var k = 0 ; k < request.m[0].length ; k++ ){
-						if(all[i].childNodes[5].innerHTML.indexOf(request.m[0][k]) != -1){
-							a=true;
-							break;
-						}
-					}
-				}else a=true;
-				if(request.m[5]){
-					for( var k = 0 ; k < request.m[1].length ; k++ ){
-						if(all[i].childNodes[4].innerHTML.indexOf(request.m[1][k]) != -1){
-							b=true;
-							break;
-						}
-					}
-				}else b=true;
-				if(!a || !b) all[i].style.display="none";
+			if(all.length){
+				addrec();
+				alert("已隐藏不需要的课程。");
+				sendResponse({result:true});
 			}
-		}
-		if(request.m[2]){
-			for( var i = 0 ; i < all.length ; i++ ){
-				if(Number(all[i].childNodes[10].innerHTML) <= Number(all[i].childNodes[11].innerHTML)){
-					all[i].style.display="none";
-				}
-			}
-		}
-		if(all.length){
-			addrec();
-			alert("已隐藏不需要的课程。");
-			sendResponse({result:true});
 		}
 	}
 )

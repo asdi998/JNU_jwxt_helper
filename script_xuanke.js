@@ -37,7 +37,15 @@ function ready(){
 		if(sessionStorage['hasUpdate']=='true') ts.innerHTML=ts.innerHTML+'（<a href="'+sessionStorage['updateUrl']+'" target="JNU_jwxt_update">获取新版插件<\/a>）';
 	}
 	var l=document.getElementById("pnlPg");
-	ready2();
+	if(l){
+		l.childNodes[1].childNodes[0].childNodes[1].innerHTML='<input type="submit" value="准备抢课" id="btnReady">&nbsp;'+l.childNodes[1].childNodes[0].childNodes[1].innerHTML;
+		var b = document.getElementById("btnReady"); 
+		b.onclick=function(){ 
+			ready2();
+			b.value='已准备';
+			return false;
+		} 
+	}
 }
 function ready2(){
 	var Btn = document.getElementById('btnKkLb'); 

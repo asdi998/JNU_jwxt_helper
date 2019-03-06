@@ -1,4 +1,4 @@
-var ver=0.3;
+var ver=0.29;
 
 document.title='首页-暨大教务系统';
 var main = document.getElementById('mainFrame');
@@ -12,6 +12,9 @@ function getUpdate(ver){
 	sessionStorage['verCheck']='true';
 	var new_element = document.createElement("script");
 	new_element.setAttribute("type", "text/javascript");
-	new_element.setAttribute("src", "https:\/\/api.asdi998.com\/JNU_jwxt_helper_update.php");
+	new_element.setAttribute("src", "https:\/\/api.asdi998.com\/JNU_jwxt_helper_update_edge.php");
 	document.body.appendChild(new_element);
 }
+chrome.runtime.sendMessage({haslogin: "true"}, function(response) {
+  if(response.code=='ok') sessionStorage['hasLogin']='true';
+});

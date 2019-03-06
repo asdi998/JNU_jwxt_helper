@@ -10,7 +10,11 @@ b.onclick=function(){
 } 
 BtnLogin.onclick=function(){ 
 	bg.exitLogin();
-	focusOrCreateTab(chrome.runtime.getURL("files/login.htm"));
+	focusOrCreateTab("files/login.htm");
+	return false;
+}
+BtnQiang.onclick=function(){ 
+	focusOrCreateTab("files/qiangke.htm");
 	return false;
 }
 BtnSet.onclick=function(){ 
@@ -24,22 +28,13 @@ BtnSet.onclick=function(){
 } 
 if(login){
 	BtnLogin.value='切换账号';
-	BtnQiang.onclick=function(){ 
-		focusOrCreateTab(chrome.runtime.getURL("files/qiangke.htm"));
-		return false;
-	}
 }else{
 	BtnIndex.style.display='none';
-	BtnQiang.value='快速登录并选课';
-	BtnQiang.onclick=function(){ 
-		bg.FastGo();
-		focusOrCreateTab(chrome.runtime.getURL("files/login.htm"));
-		return false;
-	}
+	BtnQiang.style.display='none';
 }
 chrome.storage.local.get(['hostUrl'], function(result) {
 	if(!result.hostUrl) chrome.storage.local.set({'hostUrl': 'https://jwxt.jnu.edu.cn/'}, function(){});
-	else if(result.hostUrl.indexOf('172') != -1) document.getElementById("sites").value='172';
+	if(result.hostUrl.indexOf('172') != -1) document.getElementById("sites").value='172';
 	BtnIndex.onclick=function(){ 
 		focusOrCreateTab(result.hostUrl+"IndexPage.aspx");
 		return false;
