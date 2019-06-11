@@ -1,21 +1,25 @@
 chrome.webRequest.onBeforeRequest.addListener(
 	function(details) {
-		return {redirectUrl: chrome.runtime.getURL("files/login.htm")}; 
+		if(details.initiator=="https://jwxt.jnu.edu.cn") return {redirectUrl: chrome.runtime.getURL("files/login.htm")}; 
+		else if(details.initiator=="http://202.116.0.172:8083") return {redirectUrl: chrome.runtime.getURL("files/login2.htm")}; 
 	},
 	{urls: ["http://202.116.0.172:8083/","https://jwxt.jnu.edu.cn/"]},
 	["blocking"]);
 	
 chrome.webRequest.onBeforeRequest.addListener(
 	function(details) {
-		if(details.initiator=="https://jwxt.jnu.edu.cn" || details.initiator=="http://202.116.0.172:8083") exitLogin();
+		if(details.initiator=="https://jwxt.jnu.edu.cn") exitLogin('1');
+		else if(details.initiator=="http://202.116.0.172:8083") exitLogin('2');
 	},
 	{urls: ["http://202.116.0.172:8083/Login.aspx","https://jwxt.jnu.edu.cn/Login.aspx"]},
 	["blocking"]);
 	
 chrome.webRequest.onBeforeRequest.addListener(
 	function(details) {
-		if(hasLogin() && isFast()){
-			sessionStorage['fast']='';
+		if(details.url.indexOf("jwxt") != -1) var n='1';
+		else var n='2';
+		if(isLogin(n) && isFast(n)){
+			sessionStorage['fast'+n]='';
 			return {redirectUrl: chrome.runtime.getURL("files/qiangke.htm")}; 
 		}
 	},
@@ -24,33 +28,55 @@ chrome.webRequest.onBeforeRequest.addListener(
 	
 chrome.webRequest.onBeforeRedirect.addListener(
 	function(details) {
-		Logined();
+		if(details.url.indexOf("jwxt") != -1) Logined('1');
+		else Logined('2');		
 	},
 	{urls: ["http://202.116.0.172:8083/Login.aspx","https://jwxt.jnu.edu.cn/Login.aspx"]},
 	["responseHeaders"]);
 	
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    sendResponse({hasLogin: sessionStorage['hasLogin']});
-  });
+chrome.webRequest.onBeforeRedirect.addListener(
+	function(details) {
+		if(details.url.indexOf("jwxt") != -1) readed('1');
+		else readed('2');		
+	},
+	{urls: ["http://202.116.0.172:8083/Secure/PaiKeXuanKe/wfrm_Xk_ReadMeCn.aspx","https://jwxt.jnu.edu.cn/Secure/PaiKeXuanKe/wfrm_Xk_ReadMeCn.aspx"]},
+	["responseHeaders"]);
+	
 function hasLogin(){
-	if(sessionStorage['hasLogin']=='true'){
+	if(sessionStorage['hasLogin1']=='true' || sessionStorage['hasLogin2']=='true'){
 		return true;
 	}else{
 		return false;
 	}
 }
-function exitLogin(){
-	sessionStorage['hasLogin']='';
+function isLogin(n){
+	if(sessionStorage['hasLogin'+n]=='true'){
+		return true;
+	}else{
+		return false;
+	}
 }
-function Logined(){
-	sessionStorage['hasLogin']='true';
+function exitLogin(n){
+	sessionStorage['hasLogin'+n]='';
 }
-function FastGo(){
-	sessionStorage['fast']='true';
+function Logined(n){
+	sessionStorage['hasLogin'+n]='true';
 }
-function isFast(){
-	if(sessionStorage['fast']=='true'){
+function readed(n){
+	sessionStorage['read'+n]='true';
+}
+function isRead(n){
+	if(sessionStorage['read'+n]=='true'){
+		return true;
+	}else{
+		return false;
+	}
+}
+function FastGo(n){
+	sessionStorage['fast'+n]='true';
+}
+function isFast(n){
+	if(sessionStorage['fast'+n]=='true'){
 		return true;
 	}else{
 		return false;

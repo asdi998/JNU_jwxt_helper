@@ -1,5 +1,4 @@
 var bg = chrome.extension.getBackgroundPage();
-var login = bg.hasLogin();
 var BtnLogin = document.getElementById("btnLogin"); 
 var vcode = document.getElementById("vcode"); 
 var BtnSave = document.getElementById("btnFogetPswd"); 
@@ -25,8 +24,10 @@ chrome.storage.local.get(['jwxt_account','jwxt_passwd','jwxt_save','hostUrl'], f
 	}
 	if(result.hostUrl.indexOf('http') == -1) chrome.storage.local.set({'hostUrl': 'https://jwxt.jnu.edu.cn/'}, function(){});
 	else{
-		if(login) location.href=result.hostUrl+'IndexPage.aspx';
-		else if(location.href.indexOf('login.htm') != -1 && result.hostUrl.indexOf('172') != -1) location.href='login2.htm';
+		if(result.hostUrl.indexOf('172') != -1){
+			if(location.href.indexOf('login.htm') != -1) location.href='login2.htm';
+			else if(bg.isLogin('2')) location.href=result.hostUrl+'IndexPage.aspx';
+		}else if(bg.isLogin('1')) location.href=result.hostUrl+'IndexPage.aspx';
 	}
 });
 BtnSave.onclick=function(){ 

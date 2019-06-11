@@ -1,8 +1,6 @@
-chrome.runtime.sendMessage({}, function(response) {
-	var btnY = document.getElementById('btnYes');
-	if(response.hasLogin=='true' && !btnY) document.location.reload();
-	if(btnY){
-		sessionStorage['page']='read';
-		btnY.click();
-	}
-});
+var btnY = document.getElementById('btnYes');
+if(!btnY) document.location.reload();
+else{
+	sessionStorage['page']='read';
+	btnY.click();
+}

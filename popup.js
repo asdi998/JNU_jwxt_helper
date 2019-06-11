@@ -4,47 +4,50 @@ var BtnIndex = document.getElementById("enter_index");
 var BtnQiang = document.getElementById("enter_qiangke"); 
 var BtnSet = document.getElementById("setO");
 var bg = chrome.extension.getBackgroundPage();
-var login = bg.hasLogin();
-b.onclick=function(){ 
-	getMessage();
-} 
-BtnLogin.onclick=function(){ 
-	bg.exitLogin();
-	focusOrCreateTab(chrome.runtime.getURL("files/login.htm"));
-	return false;
-}
-BtnSet.onclick=function(){ 
-	var sites=document.getElementById("sites").value;
-	if(sites=='jwxt') hostUrl='https://jwxt.jnu.edu.cn/';
-	else if(sites=='172') hostUrl='http://202.116.0.172:8083/';
-	chrome.storage.local.set({'hostUrl': hostUrl}, function(){});
-	bg.exitLogin();
-	location.reload();
-	return false;
-} 
-if(login){
-	BtnLogin.value='切换账号';
-	BtnQiang.onclick=function(){ 
-		focusOrCreateTab(chrome.runtime.getURL("files/qiangke.htm"));
-		return false;
-	}
-}else{
-	BtnIndex.style.display='none';
-	BtnQiang.value='快速登录并选课';
-	BtnQiang.onclick=function(){ 
-		bg.FastGo();
-		focusOrCreateTab(chrome.runtime.getURL("files/login.htm"));
-		return false;
-	}
-}
 chrome.storage.local.get(['hostUrl'], function(result) {
 	if(!result.hostUrl) chrome.storage.local.set({'hostUrl': 'https://jwxt.jnu.edu.cn/'}, function(){});
-	else if(result.hostUrl.indexOf('172') != -1) document.getElementById("sites").value='172';
+	else if(result.hostUrl.indexOf('172') != -1){
+		document.getElementById("sites").value='172';
+		sessionStorage['n']='2';
+	}else sessionStorage['n']='1';
 	BtnIndex.onclick=function(){ 
 		focusOrCreateTab(result.hostUrl+"IndexPage.aspx");
 		return false;
 	}
+	b.onclick=function(){ 
+		getMessage();
+	} 
+	BtnLogin.onclick=function(){ 
+		bg.exitLogin(sessionStorage['n']);
+		focusOrCreateTab(chrome.runtime.getURL("files/login.htm"));
+		return false;
+	}
+	BtnSet.onclick=function(){ 
+		var sites=document.getElementById("sites").value;
+		if(sites=='jwxt') hostUrl='https://jwxt.jnu.edu.cn/';
+		else if(sites=='172') hostUrl='http://202.116.0.172:8083/';
+		chrome.storage.local.set({'hostUrl': hostUrl}, function(){});
+		location.reload();
+		return false;
+	} 
+	if(bg.isLogin(sessionStorage['n'])){
+		BtnLogin.value='切换账号';
+		BtnQiang.onclick=function(){ 
+			focusOrCreateTab(chrome.runtime.getURL("files/qiangke.htm"));
+			return false;
+		}
+	}else{
+		BtnIndex.style.display='none';
+		BtnQiang.value='快速登录并选课';
+		BtnQiang.onclick=function(){ 
+			bg.FastGo(sessionStorage['n']);
+			focusOrCreateTab(chrome.runtime.getURL("files/login.htm"));
+			return false;
+		}
+	}
 });
+
+
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
 	chrome.tabs.sendMessage(tabs[0].id, {page:"get"}, function(response) {
 		if(response){
