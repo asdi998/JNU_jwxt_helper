@@ -1,4 +1,4 @@
-ver=0.35;
+ver=0.36;
 
 chrome.webRequest.onBeforeRequest.addListener(
 	function(details) {
@@ -75,11 +75,8 @@ function getVer(){
 	return ver;
 }
 	
-function setstate(){
-	if(getstate())
-		sessionStorage['switchstate']='';
-	else
-		sessionStorage['switchstate']='true';
+function setstate(s){
+	sessionStorage['switchstate']=s;
 	return true;
 }
 

@@ -1,4 +1,5 @@
 var b = document.getElementById("sb"); 
+var s = document.getElementById("sites");
 var BtnLogin = document.getElementById("enter_login"); 
 var BtnIndex = document.getElementById("enter_index"); 
 var BtnQiang = document.getElementById("enter_qiangke"); 
@@ -8,6 +9,11 @@ var aGetKey = document.getElementById("getkey");
 var pushKey = document.getElementById("key");
 var BtnSetKey = document.getElementById("setkey");
 var bg = chrome.extension.getBackgroundPage();
+
+s.onchange=function(){
+	if(s.value=='jwxt') document.getElementById("sites2").style.display='';
+	else document.getElementById("sites2").style.display='none';
+}
 
 chrome.storage.local.get(['key'], function(result) {
 	if(result.key){
@@ -33,11 +39,29 @@ BtnCheck.onclick=function(){
 }
 		
 chrome.storage.local.get(['hostUrl'], function(result) {
-	if(!result.hostUrl) chrome.storage.local.set({'hostUrl': 'https://jwxt.jnu.edu.cn/'}, function(){});
-	else if(result.hostUrl.indexOf('172') != -1){
+	chrome.storage.local.get(['hostUrl2'], function(result2) {
+		if(!result2.hostUrl2) {
+			chrome.storage.local.set({'hostUrl2': '1'}, function(){});
+			document.getElementById("sites2").value='1';
+		}
+		document.getElementById("sites2").value=result2.hostUrl2;
+		if(result2.hostUrl2=='1') {
+			bg.setstate('');
+		}else{
+			bg.setstate('true');
+		}
+	});
+	if(!result.hostUrl) {
+		chrome.storage.local.set({'hostUrl': 'https://jwxt.jnu.edu.cn/'}, function(){});
+		sessionStorage['n']='1';
+		document.getElementById("sites2").style.display='';
+	}else if(result.hostUrl.indexOf('172') != -1){
 		document.getElementById("sites").value='172';
 		sessionStorage['n']='2';
-	}else sessionStorage['n']='1';
+	}else{
+		sessionStorage['n']='1';
+		document.getElementById("sites2").style.display='';
+	}
 	BtnIndex.onclick=function(){ 
 		focusOrCreateTab(result.hostUrl+"IndexPage.aspx");
 		return false;
@@ -47,9 +71,11 @@ chrome.storage.local.get(['hostUrl'], function(result) {
 	} 
 	BtnSet.onclick=function(){ 
 		var sites=document.getElementById("sites").value;
+		var sites2=document.getElementById("sites2").value;
 		if(sites=='jwxt') hostUrl='https://jwxt.jnu.edu.cn/';
 		else if(sites=='172') hostUrl='http://202.116.0.172:8083/';
 		chrome.storage.local.set({'hostUrl': hostUrl}, function(){});
+		chrome.storage.local.set({'hostUrl2': sites2}, function(){});
 		location.reload();
 		return false;
 	} 
