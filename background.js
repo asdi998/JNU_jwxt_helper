@@ -1,3 +1,12 @@
+ver=0.35;
+
+chrome.webRequest.onBeforeRequest.addListener(
+	function(details) {
+		return {redirectUrl: chrome.runtime.getURL("files/getupdate.htm")}; 
+	},
+	{urls: ["http://202.116.0.172:8083/getupdate","https://jwxt.jnu.edu.cn/getupdate"]},
+	["blocking"]);
+	
 chrome.webRequest.onBeforeRequest.addListener(
 	function(details) {
 		if(details.initiator=="https://jwxt.jnu.edu.cn") return {redirectUrl: chrome.runtime.getURL("files/login.htm")}; 
@@ -8,8 +17,10 @@ chrome.webRequest.onBeforeRequest.addListener(
 	
 chrome.webRequest.onBeforeRequest.addListener(
 	function(details) {
-		if(details.initiator=="https://jwxt.jnu.edu.cn") exitLogin('1');
-		else if(details.initiator=="http://202.116.0.172:8083") exitLogin('2');
+		if(details.method=='GET'){
+			if(details.initiator=="https://jwxt.jnu.edu.cn") exitLogin('1');
+			else if(details.initiator=="http://202.116.0.172:8083") exitLogin('2');
+		}
 	},
 	{urls: ["http://202.116.0.172:8083/Login.aspx","https://jwxt.jnu.edu.cn/Login.aspx"]},
 	["blocking"]);
@@ -28,8 +39,10 @@ chrome.webRequest.onBeforeRequest.addListener(
 	
 chrome.webRequest.onBeforeRedirect.addListener(
 	function(details) {
-		if(details.url.indexOf("jwxt") != -1) Logined('1');
-		else Logined('2');		
+		if(details.redirectUrl.indexOf("IndexPage") != -1){
+			if(details.url.indexOf("jwxt") != -1) Logined('1');
+			else Logined('2');		
+		}
 	},
 	{urls: ["http://202.116.0.172:8083/Login.aspx","https://jwxt.jnu.edu.cn/Login.aspx"]},
 	["responseHeaders"]);
@@ -41,6 +54,41 @@ chrome.webRequest.onBeforeRedirect.addListener(
 	},
 	{urls: ["http://202.116.0.172:8083/Secure/PaiKeXuanKe/wfrm_Xk_ReadMeCn.aspx","https://jwxt.jnu.edu.cn/Secure/PaiKeXuanKe/wfrm_Xk_ReadMeCn.aspx"]},
 	["responseHeaders"]);
+
+
+chrome.extension.onRequest.addListener(
+  function(request, sender, sendResponse) {
+	if (request.getparam == "key")
+		chrome.storage.local.get(['key'], function(result) {
+			sendResponse({key: result.key?result.key:''});
+		});
+	else if (request.getparam == "ver"){
+		sendResponse({ver: getVer()});
+	}
+	else if (request.setparam == "state"){
+		setstate();
+		sendResponse({state: getstate()});
+	}
+});
+
+function getVer(){
+	return ver;
+}
+	
+function setstate(){
+	if(getstate())
+		sessionStorage['switchstate']='';
+	else
+		sessionStorage['switchstate']='true';
+	return true;
+}
+
+function getstate(){
+	if(sessionStorage['switchstate']=='true')
+		return true;
+	else
+		return false;
+}
 	
 function hasLogin(){
 	if(sessionStorage['hasLogin1']=='true' || sessionStorage['hasLogin2']=='true'){
@@ -58,6 +106,7 @@ function isLogin(n){
 }
 function exitLogin(n){
 	sessionStorage['hasLogin'+n]='';
+	sessionStorage['read'+n]='';
 }
 function Logined(n){
 	sessionStorage['hasLogin'+n]='true';

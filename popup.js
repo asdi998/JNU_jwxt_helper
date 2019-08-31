@@ -3,7 +3,35 @@ var BtnLogin = document.getElementById("enter_login");
 var BtnIndex = document.getElementById("enter_index"); 
 var BtnQiang = document.getElementById("enter_qiangke"); 
 var BtnSet = document.getElementById("setO");
+var BtnCheck = document.getElementById("checkupdate");
+var aGetKey = document.getElementById("getkey");
+var pushKey = document.getElementById("key");
+var BtnSetKey = document.getElementById("setkey");
 var bg = chrome.extension.getBackgroundPage();
+
+chrome.storage.local.get(['key'], function(result) {
+	if(result.key){
+		pushKey.style.display='none';
+		BtnSetKey.value='更改';
+	}
+		
+	BtnSetKey.onclick=function(){ 
+		chrome.storage.local.set({'key': pushKey.value}, function(){});
+		location.reload();
+		return false;
+	}
+});
+
+aGetKey.onclick=function(){ 
+	focusOrCreateTab("http://sc.ftqq.com/?c=code");
+	return false;
+}
+
+BtnCheck.onclick=function(){ 
+	focusOrCreateTab(chrome.runtime.getURL("files/getupdate.htm"));
+	return false;
+}
+		
 chrome.storage.local.get(['hostUrl'], function(result) {
 	if(!result.hostUrl) chrome.storage.local.set({'hostUrl': 'https://jwxt.jnu.edu.cn/'}, function(){});
 	else if(result.hostUrl.indexOf('172') != -1){
@@ -17,11 +45,6 @@ chrome.storage.local.get(['hostUrl'], function(result) {
 	b.onclick=function(){ 
 		getMessage();
 	} 
-	BtnLogin.onclick=function(){ 
-		bg.exitLogin(sessionStorage['n']);
-		focusOrCreateTab(chrome.runtime.getURL("files/login.htm"));
-		return false;
-	}
 	BtnSet.onclick=function(){ 
 		var sites=document.getElementById("sites").value;
 		if(sites=='jwxt') hostUrl='https://jwxt.jnu.edu.cn/';
@@ -32,12 +55,21 @@ chrome.storage.local.get(['hostUrl'], function(result) {
 	} 
 	if(bg.isLogin(sessionStorage['n'])){
 		BtnLogin.value='切换账号';
+		BtnLogin.onclick=function(){ 
+			bg.exitLogin(sessionStorage['n']);
+			location.reload();
+			return false;
+		}
 		BtnQiang.onclick=function(){ 
 			focusOrCreateTab(chrome.runtime.getURL("files/qiangke.htm"));
 			return false;
 		}
 	}else{
 		BtnIndex.style.display='none';
+		BtnLogin.onclick=function(){
+			focusOrCreateTab(chrome.runtime.getURL("files/login.htm"));
+			return false;
+		}
 		BtnQiang.value='快速登录并选课';
 		BtnQiang.onclick=function(){ 
 			bg.FastGo(sessionStorage['n']);

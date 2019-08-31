@@ -1,6 +1,12 @@
+skipstart='1'; //跳过重筛选
 var form = document.getElementById('form1');
 if(!form) location.reload();
 else{
+	footer = "-暨大教务系统";
+	if(sessionStorage['autolist'])
+		autolist=(sessionStorage['autolist'].split(','));
+	else
+		autolist=false;
 	if(top.window.location.pathname=="/Secure/PaiKeXuanKe/wfrm_XK_XuanKe.aspx"){
 		var status=sessionStorage['status'];
 		if(status=='undefined') status='ready';
@@ -28,9 +34,12 @@ function enterqiangke(){
 
 function ready(){
 	if(sessionStorage['hasUpdate']=='true'){
-		top.window.document.title='选课-发现插件可更新！';
-	}else top.window.document.title='选课-暨大教务系统';
+		footer = '-发现插件可更新！';
+	}
+	top.window.document.title='选课'+footer;
 	console.log("加载抢课页面");
+	if(autolist)
+		sessionStorage['autolist']='';
 	var ts=document.getElementById("lblTs");
 	if(ts){
 		ts.innerText=ts.innerText+"（抢课模式）";
@@ -39,10 +48,29 @@ function ready(){
 	var l=document.getElementById("pnlPg");
 	if(l){
 		l.childNodes[1].childNodes[0].childNodes[1].innerHTML='<input type="submit" value="准备抢课" id="btnReady">&nbsp;'+l.childNodes[1].childNodes[0].childNodes[1].innerHTML;
+		l.childNodes[1].childNodes[0].childNodes[1].innerHTML='<input type="submit" value="批量选课" id="btnBat">&nbsp;'+l.childNodes[1].childNodes[0].childNodes[1].innerHTML;
 		var b = document.getElementById("btnReady"); 
 		b.onclick=function(){ 
 			ready2();
 			b.value='已准备';
+			return false;
+		} 
+		var b2 = document.getElementById("btnBat"); 
+		b2.onclick=function(){ 
+			var allnumt=prompt("请输入班号，用英文逗号分开。");
+			var allnum=(allnumt.split(','));
+			var checknum=true;
+			for(var i=0;i<allnum.length;i++){
+				if(allnum[i].length!=9)
+					checknum=false;
+			}
+			if(!checknum){
+				alert('班号输入格式错误。');
+			}else{
+				sessionStorage['autolist']=allnumt;
+				sessionStorage['status']='start';
+				document.getElementById('btnNewReset').click();
+			}
 			return false;
 		} 
 	}
@@ -53,33 +81,42 @@ function ready2(){
 		var all=document.getElementsByClassName('DGHeaderStyle')[0].parentNode.children;
 		for( var i = 1 ; i < all.length  ; i++ ){
 			all[i].childNodes[1].childNodes[0].onclick=function(){ 
-				this.href='wfrm_XK_XuanKe.aspx';
 				sessionStorage['count']=0;
 				sessionStorage['num']=this.parentNode.parentNode.childNodes[2].innerText;
-				sessionStorage['status']="start";
-				return true;
+				if(skipstart=='0'){
+					this.href='wfrm_XK_XuanKe.aspx';
+					sessionStorage['status']="start";
+					return true;
+				}else{
+					sessionStorage['status']="run";
+					location.reload();
+					return false;
+				}
 			}
 		}
 	}
 }
 function start(){
-	if(sessionStorage['hasUpdate']=='true'){
-		top.window.document.title='准备抢课-发现插件可更新！';
-	}else top.window.document.title='准备抢课-暨大教务系统';
+	top.window.document.title='准备抢课'+footer;
 	var Btn = document.getElementById('btnKkLb'); 
 	var Btn2 = document.getElementById('dlstSsfw');
-	if(Btn.disabled) {
-		if(!Btn2.childNodes[9]){
-			sessionStorage['status']='ready';
-			alert("非选课第二阶段，不能抢课，请手动选课。");
-			console.log('#非选课第二阶段，不能抢课，请手动选课。');
-			return false;
+	if(!Btn2){
+		var resetBtn = document.getElementById('btnNewReset');
+		if(resetBtn){
+			sessionStorage['wait']=="yes"
+			resetBtn.click();
 		}
-		var num = sessionStorage['num']
+	}
+	if(Btn.disabled) {
+		if(autolist){
+			sessionStorage['num']=autolist[0];
+		}
+		if(Btn2.childNodes[9])
+			Btn2.childNodes[9].selected=true;
+		var num = sessionStorage['num'];
 		var Btn3 = document.getElementById('btnSearch');
 		var t = document.getElementById('txtPkbh');
 		t.value=num;
-		Btn2.childNodes[9].selected=true;
 		console.log('#开始抢课');
 		sessionStorage['status']='run';
 		if(sessionStorage['wait']=="yes"){
@@ -90,9 +127,7 @@ function start(){
 	}else Btn.click();
 }
 function run(form){
-	if(sessionStorage['hasUpdate']=='true'){
-		top.window.document.title='抢课中-发现插件可更新！';
-	}else top.window.document.title='抢课中-暨大教务系统';
+	top.window.document.title='抢课中'+footer;
 	var p=false;
 	window.alert = function(){ return false; }
 	form.onsubmit=function(){ return p; }
@@ -138,12 +173,22 @@ function run(form){
 					}, 2000)
 				}
 			}else{
-				console.log('#发生异常，重新开始');
-				sessionStorage['status']='start';
-				sessionStorage['wait']="yes";
-				p=true;
-				var resetBtn = document.getElementById('btnNewReset');
-				resetBtn.click();
+				if(autolist){
+					console.log('#发生异常，跳过课程：'+sessionStorage['num']);
+					push('自动批量选课发生异常，跳过课程：'+sessionStorage['num']);
+					nextAuto();
+				}
+				else if(skipstart=='0'){
+					console.log('#发生异常，重新开始');
+					sessionStorage['status']='start';
+					sessionStorage['wait']="yes";
+					p=true;
+					var resetBtn = document.getElementById('btnNewReset');
+					resetBtn.click();
+				}else{
+					alert('发生异常，停止抢课。');
+					sessionStorage['status']='ready';
+				}
 			}
 		}, 1)
 	}
@@ -151,24 +196,57 @@ function run(form){
 function success(){
 	var btnX = document.getElementById("btnReturnX"); 
 	if (btnX) {
-		if(sessionStorage['hasUpdate']=='true'){
-			top.window.document.title='抢课失败？-发现插件可更新！';
-		}else top.window.document.title='抢课失败？-暨大教务系统';
+		window.alert = function(){ return false; }
+		top.window.document.title='抢课失败？'+footer;
 		sessionStorage['status']='ready';
 		console.log('#选课失败了？');
+		if(autolist){
+			push('自动批量选课发生异常，跳过课程：'+sessionStorage['num']);
+			nextAuto();
+		}else
+			alert('#选课貌似失败了？');
 		btnX.click();
-	}
-	var Btn = document.getElementById('btnWdXk'); 
-	if(Btn){
-		Btn.click();
-		if(Btn.disabled) {
-			if(sessionStorage['hasUpdate']=='true'){
-				top.window.document.title='抢课成功？-发现插件可更新！';
-			}else top.window.document.title='抢课成功？-暨大教务系统';
-			sessionStorage['status']='ready';
-			Btn.disabled=false;
-			console.log("#抢课貌似成功了？共计尝试"+sessionStorage['count']+"次");
-			alert("#抢课貌似成功了？共计尝试"+sessionStorage['count']+"次");
+	}else{
+		var Btn = document.getElementById('btnWdXk'); 
+		if(Btn){
+			Btn.click();
+			if(Btn.disabled) {
+				top.window.document.title='抢课成功？'+footer;
+				sessionStorage['status']='ready';
+				Btn.disabled=false;
+				console.log("#抢课貌似成功了？共计尝试"+sessionStorage['count']+"次");
+				if(autolist){
+					nextAuto();
+				}else{
+					push('抢课成功！课程班号：'+sessionStorage['num']);
+					alert("#抢课貌似成功了？共计尝试"+sessionStorage['count']+"次");
+				}
+			}
 		}
+	}
+}
+
+function push(pushText){
+	pushText=encodeURI(pushText);
+	chrome.extension.sendRequest({getparam: "key"}, function(response) {
+		if(response.key.length>50){
+			xmlhttp=new XMLHttpRequest();
+			xmlhttp.open("GET",'https://sc.ftqq.com/'+response.key+'.send?text='+pushText,true);
+			xmlhttp.send();
+		}
+	});
+}
+
+function nextAuto(){
+	autolist.splice(0,1);
+	sessionStorage['autolist']=autolist;
+	if(autolist.length>0){
+		sessionStorage['status']='start';
+		location.href=location.href;
+	}else{
+		sessionStorage['status']='ready';
+		push('所有的自动批量选课完成。');
+		console.log("#所有的自动批量选课完成。");
+		alert("#所有的自动批量选课完成。");
 	}
 }
