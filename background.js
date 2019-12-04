@@ -1,4 +1,4 @@
-ver=0.36;
+ver=0.37;
 
 chrome.webRequest.onBeforeRequest.addListener(
 	function(details) {
