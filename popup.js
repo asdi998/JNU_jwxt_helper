@@ -105,17 +105,19 @@ chrome.storage.local.get(['hostUrl'], function(result) {
 	}
 });
 
-
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-	chrome.tabs.sendMessage(tabs[0].id, {page:"get"}, function(response) {
-		if(response){
-			if(response.result=="tongshi") {
-				document.getElementById("shaixuan").style.display=''; 
-				document.getElementById("leibie").style.display=''; 
-			}else if(response.result=="paike") document.getElementById("shaixuan").style.display=''; 
-		}
-	});  
+	if(tabs[0].url.indexOf('IndexPage') != -1){
+		chrome.tabs.sendMessage(tabs[0].id, {page:"get"}, function(response) {
+			if(response){
+				if(response.result=="tongshi") {
+					document.getElementById("shaixuan").style.display=''; 
+					document.getElementById("leibie").style.display=''; 
+				}else if(response.result=="paike") document.getElementById("shaixuan").style.display=''; 
+			}
+		});  
+	}
 });
+
 function getMessage(){
 	var t = document.getElementsByName("time[]");
 	var c = document.getElementsByName("class[]");

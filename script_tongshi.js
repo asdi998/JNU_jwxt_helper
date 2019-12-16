@@ -1,6 +1,5 @@
 var form = document.getElementById('Form1');
 if(!form) location.reload();
-sessionStorage['page']='tongshi';
 
 chrome.extension.onMessage.addListener(
     function(request, sender, sendResponse) {

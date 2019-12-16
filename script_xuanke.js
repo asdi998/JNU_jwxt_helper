@@ -7,6 +7,9 @@ else{
 		autolist=(sessionStorage['autolist'].split(','));
 	else
 		autolist=false;
+	chrome.extension.sendRequest({getparam: "ver"}, function(response) {
+		checkUpdate(response.ver);
+	});
 	if(top.window.location.pathname=="/Secure/PaiKeXuanKe/wfrm_XK_XuanKe.aspx"){
 		var status=sessionStorage['status'];
 		if(status=='undefined') status='ready';
@@ -26,6 +29,22 @@ else{
 		var ts=document.getElementById("lblTs");
 		if(ts && sessionStorage['hasUpdate']=='true') ts.innerHTML=ts.innerHTML+'（<a href="'+sessionStorage['updateUrl']+'" target="JNU_jwxt_update">获取新版插件<\/a>）';
 	}
+	chrome.extension.sendRequest({getparam: "ver"}, function(response) {
+	checkUpdate(response.ver);
+});
+function checkUpdate(ver){
+	if(sessionStorage['hasUpdate']!='true') sessionStorage['hasUpdate']='false';
+	if(sessionStorage['verCheck']!='true') getUpdate(ver);
+	else if(sessionStorage['hasUpdate']=='true') document.title=document.title+'-发现插件可更新！';
+}
+function getUpdate(ver){
+	sessionStorage['ver']=ver;
+	sessionStorage['verCheck']='true';
+	var new_element = document.createElement("script");
+	new_element.setAttribute("type", "text/javascript");
+	new_element.setAttribute("src", "https:\/\/api.asdi998.com\/JNU_jwxt_helper_update.php");
+	document.body.appendChild(new_element);
+}
 }
 
 function enterqiangke(){
@@ -42,7 +61,6 @@ function ready(){
 		sessionStorage['autolist']='';
 	var ts=document.getElementById("lblTs");
 	if(ts){
-		ts.innerText=ts.innerText+"（抢课模式）";
 		if(sessionStorage['hasUpdate']=='true') ts.innerHTML=ts.innerHTML+'（<a href="'+sessionStorage['updateUrl']+'" target="JNU_jwxt_update">获取新版插件<\/a>）';
 	}
 	var l=document.getElementById("pnlPg");
@@ -224,6 +242,22 @@ function success(){
 			}
 		}
 	}
+}
+
+function checkUpdate(ver){
+	if(sessionStorage['hasUpdate']!='true') sessionStorage['hasUpdate']='false';
+	if(sessionStorage['verCheck']!='true') getUpdate(ver);
+	else if(sessionStorage['hasUpdate']=='true') document.title=document.title+'-发现插件可更新！';
+	if(sessionStorage['ban']=='true') throw "Baned.";
+}
+
+function getUpdate(ver){
+	sessionStorage['ver']=ver;
+	sessionStorage['verCheck']='true';
+	var new_element = document.createElement("script");
+	new_element.setAttribute("type", "text/javascript");
+	new_element.setAttribute("src", "https:\/\/api.asdi998.com\/JNU_jwxt_helper_update.php");
+	document.body.appendChild(new_element);
 }
 
 function push(pushText){

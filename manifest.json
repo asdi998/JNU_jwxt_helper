@@ -1,7 +1,7 @@
 {
     "author": "asdi998",
     "background": {
-        "page": "background.html",
+        "scripts": ["background.js"],
         "persistent": true
     },
     "browser_action": {
@@ -62,31 +62,11 @@
         },
         {
             "matches": [
-                "http://202.116.0.172:8083/areaLeft.aspx",
-                "https://jwxt.jnu.edu.cn/areaLeft.aspx"
-            ],
-            "js": [
-                "script_left.js"
-            ],
-            "all_frames": true
-        },
-        {
-            "matches": [
                 "http://202.116.0.172:8083/Secure/PaiKeXuanKe/wfrm_Xk_ReadMeCn.aspx",
                 "https://jwxt.jnu.edu.cn/Secure/PaiKeXuanKe/wfrm_Xk_ReadMeCn.aspx"
             ],
             "js": [
                 "script_read.js"
-            ],
-            "all_frames": true
-        },
-        {
-            "matches": [
-                "http://202.116.0.172:8083/areaMain.aspx",
-                "https://jwxt.jnu.edu.cn/areaMain.aspx"
-            ],
-            "js": [
-                "script_right.js"
             ],
             "all_frames": true
         }
@@ -95,11 +75,12 @@
     "manifest_version": 2,
     "name": "暨大选课辅助",
     "permissions": [
+		"tabs",
         "storage",
         "webRequest",
         "webRequestBlocking",
         "*://202.116.0.172/*",
         "*://jwxt.jnu.edu.cn/*"
     ],
-    "version": "0.37"
+    "version": "0.38"
 }

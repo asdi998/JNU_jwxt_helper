@@ -7,7 +7,7 @@ BtnLogin.onclick=function(){
 	return checkUserPassword();
 }
 vcode.onerror=function(){ 
-	if(reload_times<100){
+	if(reload_times<10){
 		vcode.src=vcode.src+'?';
 		reload_times++;
 	}
@@ -27,7 +27,9 @@ chrome.storage.local.get(['jwxt_account','jwxt_passwd','jwxt_save','hostUrl'], f
 		if(result.hostUrl.indexOf('172') != -1){
 			if(location.href.indexOf('login.htm') != -1) location.href='login2.htm';
 			else if(bg.isLogin('2')) location.href=result.hostUrl+'IndexPage.aspx';
-		}else if(bg.isLogin('1')) location.href=result.hostUrl+'IndexPage.aspx';
+		}
+		else if(location.href.indexOf('login3.htm') == -1 && bg.getstate()) location.href='login3.htm';
+		else if(bg.isLogin('1')) location.href=result.hostUrl+'IndexPage.aspx';
 	}
 });
 BtnSave.onclick=function(){ 
