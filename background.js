@@ -1,4 +1,4 @@
-ver = 0.38;
+ver = 0.39;
 
 chrome.webRequest.onResponseStarted.addListener(
 	function (details) {
@@ -24,16 +24,6 @@ chrome.webRequest.onResponseStarted.addListener(
 		]
 	},
 	["responseHeaders"]);
-
-chrome.webRequest.onBeforeRequest.addListener(
-	function (details) {
-		return {
-			redirectUrl: chrome.runtime.getURL("files/getupdate.htm")
-		};
-	}, {
-		urls: ["http://202.116.0.172:8083/getupdate", "https://jwxt.jnu.edu.cn/getupdate"]
-	},
-	["blocking"]);
 
 chrome.webRequest.onBeforeRequest.addListener(
 	function (details) {

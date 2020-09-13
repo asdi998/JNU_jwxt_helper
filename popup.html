@@ -3,118 +3,131 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>筛选</title>
-  <style>
-    body {
-      font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-      font-size: 100%;
-    }
+	<title>筛选</title>
+	<style>
+		body {
+			font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+			font-size: 100%;
+		}
 
-    #status {
-      /* avoid an excessively wide status text */
-      white-space: pre;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      max-width: 400px;
-    }
-  </style>
+		#status {
+			/* avoid an excessively wide status text */
+			white-space: pre;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			max-width: 400px;
+		}
+	</style>
 </head>
 
 <body>
 	<div style="display:inline-block;">
-	选择源：
-	<select id="sites">
-		<option value="jwxt">jwxt.jnu.edu.cn</option>
-		<option value="172">202.116.0.172:8083</option>
-	</select>
-	<select id="sites2" style="display:none;">
-		<option value="1">方案一</option>
-		<option value="2">方案二</option>
-	</select>
-	<input type="button" value="切换" id="setO"><br>
-	<input type="button" name="fast_login" value="快速登录" id="enter_login">
-	<input type="button" name="fast_index" value="进入首页" id="enter_index">
-	<input type="button" name="fast_qiangke" value="快速选课" id="enter_qiangke">
+		选择源：
+		<select id="sites">
+			<option value="jwxt">jwxt.jnu.edu.cn</option>
+			<option value="172">202.116.0.172:8083</option>
+		</select>
+		<select id="sites2" style="display:none;">
+			<option value="1">方案一</option>
+			<option value="2">方案二</option>
+		</select>
+		<input type="button" value="切换" id="setO"><br>
+		<input type="button" name="fast_login" value="快速登录" id="enter_login">
+		<input type="button" name="fast_index" value="进入首页" id="enter_index">
+		<input type="button" name="fast_qiangke" value="快速选课" id="enter_qiangke">
 	</div><br>
 	<div id="shaixuan" style="display:none">
-	隐藏选满的课: <input type="radio" name="noneedfull" checked="checked" value="false" />否 
-	 <input type="radio" name="noneedfull" value="true" />是<br>
-	筛选模式: <input type="radio" name="mode" checked="checked" value="true" />排除 
-	 <input type="radio" name="mode" value="false" />需要<br>
-	筛选时间: <input type="radio" name="stime" checked="checked" value="false" />否 
-	 <input type="radio" name="stime" value="true" />是<br>
-	<table>
-	  <tr>
-		<th>周一</th><th>周二</th><th>周三</th><th>周四</th><th>周五</th><th>周六</th><th>周日</th>
-	  </tr>
-	  <tr>
-		<td><input type="checkbox" name="time[]" value="周一 - 1,2" id="112"><label for="112">1,2</label></td>
-		<td><input type="checkbox" name="time[]" value="周二 - 1,2" id="212"><label for="212">1,2</label></td>
-		<td><input type="checkbox" name="time[]" value="周三 - 1,2" id="312"><label for="312">1,2</label></td>
-		<td><input type="checkbox" name="time[]" value="周四 - 1,2" id="412"><label for="412">1,2</label></td>
-		<td><input type="checkbox" name="time[]" value="周五 - 1,2" id="512"><label for="512">1,2</label></td>
-		<td><input type="checkbox" name="time[]" value="周六 - 1,2" id="612"><label for="612">1,2</label></td>
-		<td><input type="checkbox" name="time[]" value="周日 - 1,2" id="712"><label for="712">1,2</label></td>
-	  </tr>
-	  <tr>
-		<td><input type="checkbox" name="time[]" value="周一 - 3,4" id="134"><label for="134">3,4</label></td>
-		<td><input type="checkbox" name="time[]" value="周二 - 3,4" id="234"><label for="234">3,4</label></td>
-		<td><input type="checkbox" name="time[]" value="周三 - 3,4" id="334"><label for="334">3,4</label></td>
-		<td><input type="checkbox" name="time[]" value="周四 - 3,4" id="434"><label for="434">3,4</label></td>
-		<td><input type="checkbox" name="time[]" value="周五 - 3,4" id="534"><label for="534">3,4</label></td>
-		<td><input type="checkbox" name="time[]" value="周六 - 3,4" id="634"><label for="634">3,4</label></td>
-		<td><input type="checkbox" name="time[]" value="周日 - 3,4" id="734"><label for="734">3,4</label></td>
-	  </tr>
-	  <tr>
-		<td><input type="checkbox" name="time[]" value="周一 - 7,8" id="178"><label for="178">7,8</label></td>
-		<td><input type="checkbox" name="time[]" value="周二 - 7,8" id="278"><label for="278">7,8</label></td>
-		<td><input type="checkbox" name="time[]" value="周三 - 7,8" id="378"><label for="378">7,8</label></td>
-		<td><input type="checkbox" name="time[]" value="周四 - 7,8" id="478"><label for="478">7,8</label></td>
-		<td><input type="checkbox" name="time[]" value="周五 - 7,8" id="578"><label for="578">7,8</label></td>
-		<td><input type="checkbox" name="time[]" value="周六 - 7,8" id="678"><label for="678">7,8</label></td>
-		<td><input type="checkbox" name="time[]" value="周日 - 7,8" id="778"><label for="778">7,8</label></td>
-	  </tr>
-	  <tr>
-		<td><input type="checkbox" name="time[]" value="周一 - 11,12" id="11122"><label for="11122">11,12</label></td>
-		<td><input type="checkbox" name="time[]" value="周二 - 11,12" id="21122"><label for="21122">11,12</label></td>
-		<td><input type="checkbox" name="time[]" value="周三 - 11,12" id="31122"><label for="31122">11,12</label></td>
-		<td><input type="checkbox" name="time[]" value="周四 - 11,12" id="41122"><label for="41122">11,12</label></td>
-		<td><input type="checkbox" name="time[]" value="周五 - 11,12" id="51122"><label for="51122">11,12</label></td>
-		<td><input type="checkbox" name="time[]" value="周六 - 11,12" id="61122"><label for="61122">11,12</label></td>
-		<td><input type="checkbox" name="time[]" value="周日 - 11,12" id="71122"><label for="71122">11,12</label></td>
-	  </tr>
-	</table>
-	<br>
-	<div id="leibie" style="display:none">
-	筛选类别：<input type="radio" name="sclass" checked="checked" value="false" />否 
-	 <input type="radio" name="sclass" value="true" />是<br>
-	<input type="checkbox" name="class[]" value="其他类" id="qita">
-	<label for="qita">其他类</label><br>
-	<input type="checkbox" name="class[]" value="文史哲类" id="wsz">
-	<label for="wsz">文史哲类</label><br>
-	<input type="checkbox" name="class[]" value="经管法类" id="jgf">
-	<label for="jgf">经管法类</label><br>
-	<input type="checkbox" name="class[]" value="艺术素养类" id="ys">
-	<label for="ys">艺术素养类</label><br>
-	<input type="checkbox" name="class[]" value="数学理工类" id="sl">
-	<label for="sl">数学理工类</label><br>
-	<input type="checkbox" name="class[]" value="生命科学类" id="sk">
-	<label for="sk">生命科学类</label><br>
-	<input type="checkbox" name="class[]" value="高级外语课程群" id="gy">
-	<label for="gy">高级外语课程群</label><br>
-	<input type="checkbox" name="class[]" value="计算机高级课程群" id="jsj">
-	<label for="jsj">计算机高级课程群</label><br>
-	<input type="checkbox" name="class[]" value="体育竞技与休闲运动课程群" id="ty">
-	<label for="ty">体育竞技与休闲运动课程群</label><br>
-	<input type="checkbox" name="class[]" value="创新创业就业心理类课程群" id="cc">
-	<label for="cc">创新创业就业心理类课程群</label><br>
-	</div>
-	<input type="submit" value="筛选" id="sb"><br>
+		隐藏选满的课: <input type="radio" name="noneedfull" checked="checked" value="false" />否
+		<input type="radio" name="noneedfull" value="true" />是<br>
+		筛选模式: <input type="radio" name="mode" checked="checked" value="true" />排除
+		<input type="radio" name="mode" value="false" />需要<br>
+		筛选时间: <input type="radio" name="stime" checked="checked" value="false" />否
+		<input type="radio" name="stime" value="true" />是<br>
+		<table>
+			<tr>
+				<th>周一</th>
+				<th>周二</th>
+				<th>周三</th>
+				<th>周四</th>
+				<th>周五</th>
+				<th>周六</th>
+				<th>周日</th>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="time[]" value="周一 - 1,2" id="112"><label for="112">1,2</label></td>
+				<td><input type="checkbox" name="time[]" value="周二 - 1,2" id="212"><label for="212">1,2</label></td>
+				<td><input type="checkbox" name="time[]" value="周三 - 1,2" id="312"><label for="312">1,2</label></td>
+				<td><input type="checkbox" name="time[]" value="周四 - 1,2" id="412"><label for="412">1,2</label></td>
+				<td><input type="checkbox" name="time[]" value="周五 - 1,2" id="512"><label for="512">1,2</label></td>
+				<td><input type="checkbox" name="time[]" value="周六 - 1,2" id="612"><label for="612">1,2</label></td>
+				<td><input type="checkbox" name="time[]" value="周日 - 1,2" id="712"><label for="712">1,2</label></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="time[]" value="周一 - 3,4" id="134"><label for="134">3,4</label></td>
+				<td><input type="checkbox" name="time[]" value="周二 - 3,4" id="234"><label for="234">3,4</label></td>
+				<td><input type="checkbox" name="time[]" value="周三 - 3,4" id="334"><label for="334">3,4</label></td>
+				<td><input type="checkbox" name="time[]" value="周四 - 3,4" id="434"><label for="434">3,4</label></td>
+				<td><input type="checkbox" name="time[]" value="周五 - 3,4" id="534"><label for="534">3,4</label></td>
+				<td><input type="checkbox" name="time[]" value="周六 - 3,4" id="634"><label for="634">3,4</label></td>
+				<td><input type="checkbox" name="time[]" value="周日 - 3,4" id="734"><label for="734">3,4</label></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="time[]" value="周一 - 7,8" id="178"><label for="178">7,8</label></td>
+				<td><input type="checkbox" name="time[]" value="周二 - 7,8" id="278"><label for="278">7,8</label></td>
+				<td><input type="checkbox" name="time[]" value="周三 - 7,8" id="378"><label for="378">7,8</label></td>
+				<td><input type="checkbox" name="time[]" value="周四 - 7,8" id="478"><label for="478">7,8</label></td>
+				<td><input type="checkbox" name="time[]" value="周五 - 7,8" id="578"><label for="578">7,8</label></td>
+				<td><input type="checkbox" name="time[]" value="周六 - 7,8" id="678"><label for="678">7,8</label></td>
+				<td><input type="checkbox" name="time[]" value="周日 - 7,8" id="778"><label for="778">7,8</label></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="time[]" value="周一 - 11,12" id="11122"><label for="11122">11,12</label>
+				</td>
+				<td><input type="checkbox" name="time[]" value="周二 - 11,12" id="21122"><label for="21122">11,12</label>
+				</td>
+				<td><input type="checkbox" name="time[]" value="周三 - 11,12" id="31122"><label for="31122">11,12</label>
+				</td>
+				<td><input type="checkbox" name="time[]" value="周四 - 11,12" id="41122"><label for="41122">11,12</label>
+				</td>
+				<td><input type="checkbox" name="time[]" value="周五 - 11,12" id="51122"><label for="51122">11,12</label>
+				</td>
+				<td><input type="checkbox" name="time[]" value="周六 - 11,12" id="61122"><label for="61122">11,12</label>
+				</td>
+				<td><input type="checkbox" name="time[]" value="周日 - 11,12" id="71122"><label for="71122">11,12</label>
+				</td>
+			</tr>
+		</table>
+		<br>
+		<div id="leibie" style="display:none">
+			筛选类别：<input type="radio" name="sclass" checked="checked" value="false" />否
+			<input type="radio" name="sclass" value="true" />是<br>
+			<input type="checkbox" name="class[]" value="其他类" id="qita">
+			<label for="qita">其他类</label><br>
+			<input type="checkbox" name="class[]" value="文史哲类" id="wsz">
+			<label for="wsz">文史哲类</label><br>
+			<input type="checkbox" name="class[]" value="经管法类" id="jgf">
+			<label for="jgf">经管法类</label><br>
+			<input type="checkbox" name="class[]" value="艺术素养类" id="ys">
+			<label for="ys">艺术素养类</label><br>
+			<input type="checkbox" name="class[]" value="数学理工类" id="sl">
+			<label for="sl">数学理工类</label><br>
+			<input type="checkbox" name="class[]" value="生命科学类" id="sk">
+			<label for="sk">生命科学类</label><br>
+			<input type="checkbox" name="class[]" value="高级外语课程群" id="gy">
+			<label for="gy">高级外语课程群</label><br>
+			<input type="checkbox" name="class[]" value="计算机高级课程群" id="jsj">
+			<label for="jsj">计算机高级课程群</label><br>
+			<input type="checkbox" name="class[]" value="体育竞技与休闲运动课程群" id="ty">
+			<label for="ty">体育竞技与休闲运动课程群</label><br>
+			<input type="checkbox" name="class[]" value="创新创业就业心理类课程群" id="cc">
+			<label for="cc">创新创业就业心理类课程群</label><br>
+		</div>
+		<input type="submit" value="筛选" id="sb"><br>
 	</div>
 	<br><a id="getkey">推送key</a>：
 	<input type="password" id="key">
 	<input type="button" value="设置" id="setkey">
-	<br><input type="button" value="检查更新" id="checkupdate"><br>
+	<br>
 	<script src="popup.js"></script>
 </body>
 
